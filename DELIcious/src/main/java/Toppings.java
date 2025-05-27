@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Toppings implements Serializable {
-    String type;
+    String toppingType;
     String name;
-    Size size;
+    BreadSize size;
     double price;
 
-    public Toppings(String type, String name, Size size, double price) {
-        this.type = type;
+    public Toppings(String toppingType, String name, BreadSize size, double price) {
+        this.toppingType = toppingType;
         this.name = name;
         this.size = size;
         this.price = price;
@@ -19,12 +19,12 @@ public class Toppings implements Serializable {
     }
 
 
-    public Size getSize() {
+    public BreadSize getSize() {
         return size;
     }
 
     public String getType() {
-        return type;
+        return toppingType;
     }
 
     public String getName() {
@@ -34,29 +34,29 @@ public class Toppings implements Serializable {
 
     public static List<Toppings> getToppings() {
         List<Toppings> toppings = new ArrayList<>();
-        toppings.add(new Toppings("MEAT", "STEAK", Size.SMALL, 1.00));
-        toppings.add(new Toppings("MEAT", "HAM", Size.SMALL, 1.00));
-        toppings.add(new Toppings("MEAT", "SALAMI", Size.SMALL, 1.00));
-        toppings.add(new Toppings("MEAT", "ROAST BEEF", Size.SMALL, 1.00));
-        toppings.add(new Toppings("MEAT", "CHICKEN", Size.SMALL, 1.00));
-        toppings.add(new Toppings("MEAT", "BACON", Size.SMALL, 1.00));
+        toppings.add(new Toppings("MEAT", "STEAK", BreadSize.SMALL, 1.00));
+        toppings.add(new Toppings("MEAT", "HAM", BreadSize.SMALL, 1.00));
+        toppings.add(new Toppings("MEAT", "SALAMI", BreadSize.SMALL, 1.00));
+        toppings.add(new Toppings("MEAT", "ROAST BEEF", BreadSize.SMALL, 1.00));
+        toppings.add(new Toppings("MEAT", "CHICKEN", BreadSize.SMALL, 1.00));
+        toppings.add(new Toppings("MEAT", "BACON", BreadSize.SMALL, 1.00));
 
 
-        toppings.add(new Toppings("CHEESE", "AMERICAN", Size.SMALL, .75));
-        toppings.add(new Toppings("CHEESE", "PROVOLONE", Size.SMALL, .75));
-        toppings.add(new Toppings("CHEESE", "CHEDDAR", Size.SMALL, .75));
-        toppings.add(new Toppings("CHEESE", "SWISS", Size.SMALL, .75));
+        toppings.add(new Toppings("CHEESE", "AMERICAN", BreadSize.SMALL, .75));
+        toppings.add(new Toppings("CHEESE", "PROVOLONE", BreadSize.SMALL, .75));
+        toppings.add(new Toppings("CHEESE", "CHEDDAR", BreadSize.SMALL, .75));
+        toppings.add(new Toppings("CHEESE", "SWISS", BreadSize.SMALL, .75));
 
 
-        toppings.add(new Toppings("REGULAR TOPPINGS", "LETTUCE", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "PEPPERS", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "ONIONS", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "TOMATOES", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "JALAPENOS", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "CUCUMBERS", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "PICKLES", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "GUACAMOLE", Size.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "MUSHROOMS", Size.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "LETTUCE", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "PEPPERS", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "ONIONS", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "TOMATOES", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "JALAPENOS", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "CUCUMBERS",BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "PICKLES", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "GUACAMOLE", BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "MUSHROOMS", BreadSize.SMALL, .20));
 
 
         return toppings;
@@ -65,7 +65,7 @@ public class Toppings implements Serializable {
     }
 
 
-    public static double extraCharge(List<String> extras, Size size) {
+    public static double extraCharge(List<String> extras, BreadSize size) {
         double surCharge = 0.0;
 
         for (String extra : extras) {
@@ -104,7 +104,7 @@ public class Toppings implements Serializable {
         return surCharge;
     }
 
-    public double sizePrice(Size size) {
+    public double sizePrice(BreadSize size) {
 
         return switch (size) {
             case SMALL -> this.price;
@@ -115,7 +115,7 @@ public class Toppings implements Serializable {
 
     }
 
-    public List<Toppings> filterToppings(List<Toppings> toppings, String type, String name, Size size) {
+    public List<Toppings> filterToppings(List<Toppings> toppings, String type, String name, BreadSize size) {
 
         if (toppings.isEmpty()) {
             return Collections.emptyList();

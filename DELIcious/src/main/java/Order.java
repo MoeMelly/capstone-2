@@ -1,38 +1,47 @@
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order implements PriceCalc, Serializable {
+    private static final long serialVersionUTD1L = 1L;
     private String customerName;
     private String orderId;
-    private List<Sandwiches> sandwiches;
+    private List<Sandwich> sandwiches;
     private LocalDateTime orderTime;
     private double totalPrice;
+    private OrderStatus status;
 
-    public Order(String customerName, String orderId, List<Sandwiches> sandwiches, LocalDateTime orderTime, double totalPrice) {
+    public Order(String customerName, String orderId, List<Sandwich> sandwiches, LocalDateTime orderTime, double totalPrice) {
         this.customerName = customerName;
         this.orderId = orderId;
-        this.sandwiches = sandwiches;
+        this.sandwiches = new ArrayList<>();
         this.orderTime = orderTime;
         this.totalPrice = totalPrice;
     }
 
+    public static Order loadFromFile(String filename) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            return (Order) ois.readObject();
+
+        }
+    }
 
 
     public String getCustomerName() {
         return customerName;
     }
 
-    public List<Sandwiches> getSandwiches() {
+    public List<Sandwich> getSandwiches() {
         return sandwiches;
     }
 
-    public void addSandwich(Sandwiches s) {
+    public void addSandwich(Sandwich s) {
         sandwiches.add(s);
         calculateTotalPrice();
     }
 
-    public void removeSandwich(Sandwiches r) {
+    public void removeSandwich(Sandwich r) {
         sandwiches.remove(r);
         calculateTotalPrice();
     }
@@ -40,9 +49,9 @@ public class Order implements PriceCalc, Serializable {
     @Override
     public void calculateTotalPrice() {
         totalPrice = 0.0;
-        for (Sandwiches s : sandwiches) {
+        for (Sandwich s : sandwiches) {
             double sandwichPrice = 0.0;
-            switch (s.getBreadSize()) {
+            switch (s.getSize()) {
                 case SMALL  -> sandwichPrice = 5.50;
                 case MEDIUM -> sandwichPrice = 7.00;
                 case LARGE -> sandwichPrice = 8.50;
@@ -55,6 +64,7 @@ public class Order implements PriceCalc, Serializable {
 
             if (s.getChips() != null) {
                 sandwichPrice += 1.50;
+            }
 
                 if (s.getToppings() != null) {
                     for (Toppings toppings : s.getToppings()) {
@@ -67,16 +77,13 @@ public class Order implements PriceCalc, Serializable {
                 totalPrice += sandwichPrice;
             }
         }
-    }
 
     public double getTotalPrice() {
         return totalPrice;
     }
 
-    private OrderStatus status;
-
     public void updateStatus(OrderStatus status) {
-        this.updateStatus(status);
+        this.status =status;
 
     }
 
@@ -85,15 +92,10 @@ public class Order implements PriceCalc, Serializable {
             oos.writeObject(this);
         }
     }
-    public static Order loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            return (Order) ois.readObject();
-
-        }
-    }
+}
 
 
-    }
+
 
 
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import static java.io.File.separator;
 
-public class Sandwiches implements Serializable {
+public class Sandwich implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class Sandwiches implements Serializable {
     private final Chips chips;
     List<Toppings> toppings;
 
-    public Sandwiches(BreadType type, BreadSize size, boolean wantToast, Drinks drink, Chips chips, List<Toppings> toppings) {
+    public Sandwich(BreadType type, BreadSize size, boolean wantToast, Drinks drink, Chips chips, List<Toppings> toppings) {
         this.size = size;
         this.type = type;
 
