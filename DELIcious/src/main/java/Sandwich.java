@@ -6,7 +6,7 @@ import java.util.List;
 
 import static java.io.File.separator;
 
-public class Sandwich {
+public class Sandwich implements PriceCalc {
     private static final String SEPARATOR = "------------------------------------------";
     private final BreadSize size;
     private final BreadType type;
@@ -52,15 +52,25 @@ public class Sandwich {
     }
     @Override
     public String toString() {
-        return separator + System.lineSeparator()
-                + "Bread Type: " + type + System.lineSeparator()
-                + "Bread Size: " + size + System.lineSeparator()
-                + "Toasted: " + wantToast + System.lineSeparator()
-                + separator;
+        return String.format("Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s | Total: $%.2f",
+          type,
+          size,
+          wantToast ? "Toasted" : "Not Toasted",
+          toppings.isEmpty() ? "None" : String.join(",",(CharSequence) toppings),
+          chips != null ? chips.getPrice() : "None",
+          drinks != null ? drinks.getPrices() : "None",
+                calculateTotalPrice();
+
     }
 
 
+
+    @Override
+    public void calculateTotalPrice() {
+        System.out.println(this.toString());
+
     }
+}
 
 
 
