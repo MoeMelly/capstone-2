@@ -1,14 +1,13 @@
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.io.File.separator;
 
-public class Sandwich implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-
+public class Sandwich {
+    private static final String SEPARATOR = "------------------------------------------";
     private final BreadSize size;
     private final BreadType type;
     private final boolean wantToast;
@@ -19,11 +18,10 @@ public class Sandwich implements Serializable {
     public Sandwich(BreadType type, BreadSize size, boolean wantToast, Drinks drink, Chips chips, List<Toppings> toppings) {
         this.size = size;
         this.type = type;
-
         this.wantToast = wantToast;
         this.drinks = drink;
         this.chips = chips;
-        this.toppings = toppings;
+        this.toppings = toppings == null ? Collections.emptyList() : new ArrayList<>(toppings);
 
     }
 
@@ -40,14 +38,6 @@ public class Sandwich implements Serializable {
     public BreadType getType() {
         return type;
     }
-    @Override
-    public String toString() {
-        return separator + System.lineSeparator()
-                + "Bread Type: " + type + System.lineSeparator()
-                + "Bread Size: " + size + System.lineSeparator()
-                + "Toasted: " + wantToast + System.lineSeparator()
-                + separator;
-    }
 
     public Drinks getDrinks() {
         return drinks;
@@ -59,6 +49,14 @@ public class Sandwich implements Serializable {
 
     public List<Toppings> getToppings() {
         return toppings;
+    }
+    @Override
+    public String toString() {
+        return separator + System.lineSeparator()
+                + "Bread Type: " + type + System.lineSeparator()
+                + "Bread Size: " + size + System.lineSeparator()
+                + "Toasted: " + wantToast + System.lineSeparator()
+                + separator;
     }
 
 

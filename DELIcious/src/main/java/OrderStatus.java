@@ -1,5 +1,0 @@
-public enum OrderStatus {
-ORDER_PLACED,
-ORDER_COMPLETED,
-ORDER_IN_PROGRESS;
-}

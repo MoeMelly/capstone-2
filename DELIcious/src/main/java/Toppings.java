@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Toppings implements Serializable {
-    String toppingType;
-    String name;
-    BreadSize size;
-    double price;
+public class Toppings {
+    private final String toppingType;
+    private final String name;
+    private final BreadSize size;
+    private final double price;
 
     public Toppings(String toppingType, String name, BreadSize size, double price) {
         this.toppingType = toppingType;
@@ -17,6 +17,7 @@ public class Toppings implements Serializable {
         this.price = price;
 
     }
+
 
 
     public BreadSize getSize() {
@@ -53,7 +54,7 @@ public class Toppings implements Serializable {
         toppings.add(new Toppings("REGULAR TOPPINGS", "ONIONS", BreadSize.SMALL, .20));
         toppings.add(new Toppings("REGULAR TOPPINGS", "TOMATOES", BreadSize.SMALL, .20));
         toppings.add(new Toppings("REGULAR TOPPINGS", "JALAPENOS", BreadSize.SMALL, .20));
-        toppings.add(new Toppings("REGULAR TOPPINGS", "CUCUMBERS",BreadSize.SMALL, .20));
+        toppings.add(new Toppings("REGULAR TOPPINGS", "CUCUMBERS", BreadSize.SMALL, .20));
         toppings.add(new Toppings("REGULAR TOPPINGS", "PICKLES", BreadSize.SMALL, .20));
         toppings.add(new Toppings("REGULAR TOPPINGS", "GUACAMOLE", BreadSize.SMALL, .20));
         toppings.add(new Toppings("REGULAR TOPPINGS", "MUSHROOMS", BreadSize.SMALL, .20));
@@ -70,37 +71,23 @@ public class Toppings implements Serializable {
 
         for (String extra : extras) {
             switch (extra.toLowerCase()) {
-                case "extra meat":
-                    switch (size) {
-                        case SMALL:
-                            surCharge += 0.75;
-                            break;
-                        case MEDIUM:
-                            surCharge += 1.00;
-                            break;
-                        case LARGE:
-                            surCharge += 1.50;
-                            break;
-                    }
-                    break;
-                case "extra cheese":
-                    switch (size) {
-                        case SMALL:
-                            surCharge += 0.30;
-                            break;
-                        case MEDIUM:
-                            surCharge += 0.60;
-                            break;
-                        case LARGE:
-                            surCharge += 0.90;
-                            break;
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid extra: " + extra);
+                case "extra meat" -> surCharge += switch (size) {
+                    case SMALL -> 0.75;
+                    case MEDIUM -> 1.00;
+                    case LARGE -> 1.50;
+
+                };
+
+                case "extra cheese" -> {
+                    surCharge += switch (size) {
+                        case SMALL -> 0.30;
+                        case MEDIUM -> 0.60;
+                        case LARGE -> 0.90;
+                    };
+                }
+                default -> throw new IllegalArgumentException("Invalid extra: " + extra);
             }
         }
-
         return surCharge;
     }
 
@@ -115,21 +102,18 @@ public class Toppings implements Serializable {
 
     }
 
-    public List<Toppings> filterToppings(List<Toppings> toppings, String type, String name, BreadSize size) {
 
-        if (toppings.isEmpty()) {
-            return Collections.emptyList();
-        }
+    public static List<Toppings> filterToppings(List<Toppings> toppings, String type, String name, BreadSize size) {
+
+        if (toppings == null || toppings.isEmpty()) return Collections.emptyList();
+
 
         return toppings.stream()
                 .filter(toppings1 -> toppings1.getName().equalsIgnoreCase(name))
                 .filter(toppings1 -> toppings1.getType().equalsIgnoreCase(type))
                 .filter(toppings1 -> toppings1.getSize() == size)
                 .toList();
-
     }
-
-
     public static void printToppingsByCategory(List<Toppings> toppings) {
         String meat = toppings.stream()
                 .filter(toppings1 -> "MEAT".equalsIgnoreCase(toppings1.getType()))
@@ -155,13 +139,17 @@ public class Toppings implements Serializable {
 
     }
 
+
     @Override
     public String toString() {
-        return name;
+        return String.format("%s (%s) - $%.2f", name, size, price);
 
 
     }
 }
+
+
+
 
 
 

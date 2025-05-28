@@ -1,28 +1,25 @@
 import java.io.Serializable;
 
-public class Chips implements Serializable {
+public class Chips {
     private double price;
-    private String size;
+    private ChipsSize size;
 
-    public Chips(String size) {
+    public Chips(ChipsSize size) {
         this.size = size;
         this.price = calculatePrice(size);
     }
 
-    private double calculatePrice(String size) {
-        switch (size.toUpperCase()) {
-            case "S":
-                return 1.50;
-            case "M":
-                return 2.00;
-            case "L":
-                return 2.50;
-            default:
-                throw new IllegalArgumentException("Unexpected chip size: " + size);
-        }
+    private double calculatePrice(ChipsSize size) {
+
+        return switch (size) {
+            case SMALL -> 1.50;
+            case MEDIUM -> 2.0;
+            case LARGE -> 2.50;
+            default -> throw new IllegalArgumentException("Unexpected chip size: " + size);
+        };
     }
 
-    public String getSize() {
+    public ChipsSize getSize() {
         return size;
     }
 
@@ -32,6 +29,6 @@ public class Chips implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Chips Size: %s | Price: $%.2f", size.toUpperCase(), price);
+        return String.format("Chips Size: %s | Price: $%.2f", size , price);
     }
 }

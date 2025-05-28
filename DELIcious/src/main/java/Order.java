@@ -3,19 +3,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order implements PriceCalc, Serializable {
-    private static final long serialVersionUTD1L = 1L;
+public class Order implements PriceCalc {
     private String customerName;
     private String orderId;
     private List<Sandwich> sandwiches;
     private LocalDateTime orderTime;
     private double totalPrice;
-    private OrderStatus status;
 
     public Order(String customerName, String orderId, List<Sandwich> sandwiches, LocalDateTime orderTime, double totalPrice) {
         this.customerName = customerName;
         this.orderId = orderId;
-        this.sandwiches = new ArrayList<>();
+        this.sandwiches = new ArrayList<>(sandwiches != null ? sandwiches : List.of());
         this.orderTime = orderTime;
         this.totalPrice = totalPrice;
     }
@@ -31,19 +29,27 @@ public class Order implements PriceCalc, Serializable {
     public String getCustomerName() {
         return customerName;
     }
-
+    public String getOrderId() {
+        return orderId;
+    }
     public List<Sandwich> getSandwiches() {
         return sandwiches;
     }
-
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
     public void addSandwich(Sandwich s) {
-        sandwiches.add(s);
-        calculateTotalPrice();
+        if (s != null) {
+            sandwiches.add(s);
+            calculateTotalPrice();
+        }
     }
 
     public void removeSandwich(Sandwich r) {
-        sandwiches.remove(r);
-        calculateTotalPrice();
+        if (r != null) {
+            sandwiches.remove(r);
+            calculateTotalPrice();
+        }
     }
 
     @Override
@@ -59,7 +65,7 @@ public class Order implements PriceCalc, Serializable {
 
 
             if (s.getDrinks() != null) {
-                sandwichPrice += s.getDrinks().getPrices(s.getDrinks().size);
+                sandwichPrice += s.getDrinks().getPrices();
             }
 
             if (s.getChips() != null) {
@@ -82,10 +88,6 @@ public class Order implements PriceCalc, Serializable {
         return totalPrice;
     }
 
-    public void updateStatus(OrderStatus status) {
-        this.status =status;
-
-    }
 
     public void saveToFile(String filename) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
