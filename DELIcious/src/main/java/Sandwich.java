@@ -13,7 +13,7 @@ public class Sandwich implements PriceCalc {
     private final boolean wantToast;
     private final Drinks drinks;
     private final Chips chips;
-    List<Toppings> toppings;
+    private List<Toppings> toppings;
 
     public Sandwich(BreadType type, BreadSize size, boolean wantToast, Drinks drink, Chips chips, List<Toppings> toppings) {
         this.size = size;
@@ -26,11 +26,9 @@ public class Sandwich implements PriceCalc {
     }
 
 
-
     public boolean isWantToast() {
         return wantToast;
     }
-
     public BreadSize getSize() {
         return size;
     }
@@ -50,18 +48,17 @@ public class Sandwich implements PriceCalc {
     public List<Toppings> getToppings() {
         return toppings;
     }
+
     @Override
     public String toString() {
-        return String.format("Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s | Total: $%.2f",
-          type,
-          size,
-          wantToast ? "Toasted" : "Not Toasted",
-          toppings.isEmpty() ? "None" : String.join(",",(CharSequence) toppings),
-          chips != null ? chips.getPrice() : "None",
-          drinks != null ? drinks.getPrices() : "None",
-                calculateTotalPrice();
-
+        return String.format(
+                "Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s | Total: $%.2f",
+                type,
+                size,
+                wantToa
+        );
     }
+
 
 
 

@@ -8,9 +8,10 @@ public class Order implements PriceCalc {
     private final String customerName;
     private final String orderId;
     private final List<Sandwich> sandwiches;
+    List<Toppings> toppings;
     private final LocalDateTime orderTime;
-    private Chips chips;
-    private Drinks drink;
+    Chips chips;
+    Drinks drink;
     private double totalPrice;
 
     public Order(String customerName, String orderId, List<Sandwich> sandwiches, LocalDateTime orderTime,Chips chips, Drinks drink, double totalPrice) {
@@ -18,8 +19,8 @@ public class Order implements PriceCalc {
         this.orderId = orderId;
         this.sandwiches = new ArrayList<>(sandwiches != null ? sandwiches : List.of());
         this.orderTime = orderTime;
-        this.chips = null;
-        this.drink = null;
+        this.chips = chips;
+        this.drink = drink;
         this.totalPrice = totalPrice;
     }
 
@@ -96,38 +97,6 @@ public class Order implements PriceCalc {
         return totalPrice;
     }
 
-    public void writeToFile(Sandwich sandwich, String filename) throws IOException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String fileName = "src/main/resources/receipt.txt";
-        LocalDateTime timestamp = LocalDateTime.now();
-        try {
-            BufferedWriter wr = new BufferedWriter(new FileWriter(fileName, true)) {
-            };
-            wr.write("-------RECEIPT------");
-            wr.write("TimeStamp: " + timestamp + "\n");
-            wr.write("Bread type: " + sandwich.getType() + "\n");
-            wr.write("Bread size: " + sandwich.getSize() + "\n");
-            wr.write("Toasted: " + (sandwich.isWantToast() ? "Yes" : "No") + "\n");
-
-            wr.write("\nToppings:\n");
-            for (Toppings toppings : sandwich.getToppings()) {
-                wr.write("-" + toppings.toString() + "\n");
-            }
-            if (sandwich.getDrinks() != null) {
-                wr.write("\nDrink:\n" + sandwich.getDrinks().toString() + "\n");
-            }
-            if (sandwich.getChips() != null) {
-                wr.write("\nChips:\n" + sandwich.getChips().toString() + "\n");
-            }
-
-            wr.write("\n-----------------------------\n");
-
-
-        } catch (IOException ex) {
-            System.err.println("Error Writing to file.");
-            throw new RuntimeException(ex);
-        }
-    }
 
         public void viewOrder(Sandwich sandwich) {
             System.out.println("-----Order Summary-----");
