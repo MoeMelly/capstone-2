@@ -1,5 +1,3 @@
-import java.io.Serializable;
-
 public class Chips {
     private double price;
     private ChipsSize size;

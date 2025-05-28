@@ -1,14 +1,16 @@
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Order implements PriceCalc {
-    private String customerName;
-    private String orderId;
-    private List<Sandwich> sandwiches;
-    private LocalDateTime orderTime;
-    private double totalPrice;
+    private final String customerName;
+    private final String orderId;
+    private final List<Sandwich> sandwiches;
+    private final LocalDateTime orderTime;
+    private final double totalPrice;
 
     public Order(String customerName, String orderId, List<Sandwich> sandwiches, LocalDateTime orderTime, double totalPrice) {
         this.customerName = customerName;
@@ -18,26 +20,23 @@ public class Order implements PriceCalc {
         this.totalPrice = totalPrice;
     }
 
-    public static Order loadFromFile(String filename) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            return (Order) ois.readObject();
-
-        }
-    }
-
 
     public String getCustomerName() {
         return customerName;
     }
+
     public String getOrderId() {
         return orderId;
     }
+
     public List<Sandwich> getSandwiches() {
         return sandwiches;
     }
+
     public LocalDateTime getOrderTime() {
         return orderTime;
     }
+
     public void addSandwich(Sandwich s) {
         if (s != null) {
             sandwiches.add(s);
@@ -88,13 +87,43 @@ public class Order implements PriceCalc {
         return totalPrice;
     }
 
+    public void writeToFile(Sandwich sandwich,String filename) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); String fileName = "src/main/resources/receipt.txt";
+        LocalDateTime timestamp = LocalDateTime.now();
+        try {
+            BufferedWriter wr = new BufferedWriter(new FileWriter(fileName, true))) {
+            wr.write("-------RECEIPT------");
+            wr.write("TimeStamp: " + timestamp +"\n");
+            wr.write("Bread type: " + sandwich.getType() + "\n");
+            wr.write("Bread size: " + sandwich.getSize() + "\n");
+            wr.write("Toasted: " + (sandwich.isWantToast() ? "Yes" : "No") + "\n");
 
-    public void saveToFile(String filename) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(this);
+            wr.write("\nToppings:\n");
+            for (Toppings toppings : sandwich.getToppings()) {
+                wr.write("-"  + toppings.toString() + "\n");
+            }
+            if (sandwich.getDrinks() !=null) {
+                wr.write("\nDrink:\n" + sandwich.getDrinks().toString() + "\n");
+            }
+            if (sandwich.getChips() !=null) {
+                wr.write("\nChips:\n" + sandwich.getChips().toString() + "\n");
+            }
+
+            wr.write("\n-----------------------------\n");
+
+
+            };
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
+
+
+
+
 
 
 
