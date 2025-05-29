@@ -24,7 +24,6 @@ public class Order implements PriceCalc {
         this.totalPrice = totalPrice;
     }
 
-
     public String getCustomerName() { return customerName; }
     public String getOrderId() { return orderId; }
     public List<Sandwich> getSandwiches() { return sandwiches; }
@@ -33,7 +32,6 @@ public class Order implements PriceCalc {
     public List<Chips> getChips() { return chips; }
     public LocalDateTime getOrderTime() { return orderTime; }
     public double getTotalPrice() { return totalPrice; }
-
 
     public void addSandwich(Sandwich sandwich) {
         if (sandwich != null) {
@@ -56,7 +54,6 @@ public class Order implements PriceCalc {
         }
     }
 
-
     public void removeSandwich(Sandwich sandwich) {
         if (sandwich != null) {
             sandwiches.remove(sandwich);
@@ -67,6 +64,7 @@ public class Order implements PriceCalc {
     @Override
     public void calculateTotalPrice() {
         totalPrice = 0.0;
+
         for (Sandwich s : sandwiches) {
             double sandwichPrice = switch (s.getSize()) {
                 case SMALL -> 5.50;
@@ -75,11 +73,11 @@ public class Order implements PriceCalc {
             };
 
             if (s.getDrinks() != null) {
-                sandwichPrice += s.getDrinks().getPrices();
+                sandwichPrice += s.getDrinks().getPrice();
             }
 
             if (s.getChips() != null) {
-                sandwichPrice += 1.50;
+                sandwichPrice += s.getChips().getPrice();
             }
 
             if (s.getToppings() != null) {
@@ -91,17 +89,14 @@ public class Order implements PriceCalc {
             totalPrice += sandwichPrice;
         }
 
-
         for (Drinks drink : drinks) {
-            totalPrice += drink.getPrices();
+            totalPrice += drink.getPrice();
         }
-
 
         for (Chips chip : chips) {
             totalPrice += chip.getPrice();
         }
     }
-
 
     public void viewOrder() {
         System.out.println("----- Order Summary -----");
@@ -112,7 +107,7 @@ public class Order implements PriceCalc {
         System.out.println("\nSandwiches:");
         for (Sandwich sandwich : sandwiches) {
             System.out.println("- " + sandwich.getType() + " (" + sandwich.getSize() + ")");
-            System.out.println("  Toppings:");
+            System.out.println("  Toppings");
             for (Toppings topping : sandwich.getToppings()) {
                 System.out.println("    * " + topping);
             }
@@ -120,12 +115,12 @@ public class Order implements PriceCalc {
 
         System.out.println("\nDrinks:");
         for (Drinks drink : drinks) {
-            System.out.println("- " + drink.getPrices());
+            System.out.println("- " + drink + " - $" + String.format("%.2f", drink.getPrice()));
         }
 
         System.out.println("\nChips:");
         for (Chips chip : chips) {
-            System.out.println("- " + chip.getPrice());
+            System.out.println("- " + chip + " - $" + String.format("%.2f", chip.getPrice()));
         }
 
         System.out.printf("\nTotal Price: $%.2f%n", totalPrice);

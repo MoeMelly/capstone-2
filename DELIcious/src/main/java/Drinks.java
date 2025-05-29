@@ -1,30 +1,35 @@
-import java.io.Serializable;
+public class Drinks {
+    String water;
+    private DrinksSize size;
+    private double price;
 
-public class Drinks  {
-    DrinksSize size;
-
-
-    public Drinks(DrinksSize size) {
+    public Drinks(String water, DrinksSize size, double price) {
+        this.water = water;
         this.size = size;
+        this.price = calculatePriceFromSize(size);
     }
 
-    public double getPrices() {
-
+    private double calculatePriceFromSize(DrinksSize size) {
         return switch (size) {
             case SMALL -> 2.00;
             case MEDIUM -> 2.50;
             case LARGE -> 3.00;
-
-            default -> throw new IllegalArgumentException("Invalid input. Please try again.");
         };
+    }
+
+    public DrinksSize getSize() {
+        return size;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     @Override
     public String toString() {
-        return String.format("Drink Size: %s | Price: $%.2f", size , getPrices());
+        return String.format("Drink Size: %s | Price: $%.2f", size, price);
     }
-
-
 }
+
 
 

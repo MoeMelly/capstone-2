@@ -1,13 +1,8 @@
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static java.io.File.separator;
-
 public class Sandwich {
-    private static final String SEPARATOR = "------------------------------------------";
     private final BreadSize size;
     private final BreadType type;
     private final boolean wantToast;
@@ -21,49 +16,37 @@ public class Sandwich {
         this.wantToast = wantToast;
         this.drinks = drink;
         this.chips = chips;
-        this.toppings = toppings == null ? Collections.emptyList() : new ArrayList<>(toppings);
-
+        this.toppings = (toppings == null) ? Collections.emptyList() : new ArrayList<>(toppings);
     }
 
+    public boolean isWantToast() { return wantToast; }
 
-    public boolean isWantToast() {
-        return wantToast;
-    }
+    public BreadSize getSize() { return size; }
 
-    public BreadSize getSize() {
-        return size;
-    }
+    public BreadType getType() { return type; }
 
-    public BreadType getType() {
-        return type;
-    }
+    public Drinks getDrinks() { return drinks; }
 
-    public Drinks getDrinks() {
-        return drinks;
-    }
+    public Chips getChips() { return chips; }
 
-    public Chips getChips() {
-        return chips;
-    }
-
-    public List<Toppings> getToppings() {
-        return toppings;
-    }
+    public List<Toppings> getToppings() { return toppings; }
 
     @Override
     public String toString() {
         String toppingsStr = "None";
-        if (toppings != null && !toppings.isEmpty()) {
+        if (!toppings.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             for (Toppings top : toppings) {
-                sb.append(top.toString()).append(", ");
+                sb.append(top).append(",");
             }
             toppingsStr = sb.substring(0, sb.length() - 2);
         }
+
         String chipsStr = (chips == null) ? "None" : String.format("$%.2f", chips.getPrice());
-        String drinksStr = (drinks == null) ? "None" : String.format("$%.2f", drinks.getPrices());
+        String drinksStr = (drinks == null) ? "None" : String.format("$%.2f", drinks.getPrice());
+
         return String.format(
-                "Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s | Total: $%.2f",
+                "Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s",
                 type,
                 size,
                 wantToast ? "Toasted" : "Not Toasted",
@@ -72,5 +55,7 @@ public class Sandwich {
                 drinksStr
         );
     }
-}
 
+    public void calculateTotalPrice() {
+    }
+}
