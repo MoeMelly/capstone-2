@@ -6,14 +6,14 @@ import java.util.List;
 
 import static java.io.File.separator;
 
-public class Sandwich implements PriceCalc {
+public class Sandwich {
     private static final String SEPARATOR = "------------------------------------------";
     private final BreadSize size;
     private final BreadType type;
     private final boolean wantToast;
     private final Drinks drinks;
     private final Chips chips;
-    private List<Toppings> toppings;
+    private final List<Toppings> toppings;
 
     public Sandwich(BreadType type, BreadSize size, boolean wantToast, Drinks drink, Chips chips, List<Toppings> toppings) {
         this.size = size;
@@ -29,6 +29,7 @@ public class Sandwich implements PriceCalc {
     public boolean isWantToast() {
         return wantToast;
     }
+
     public BreadSize getSize() {
         return size;
     }
@@ -51,25 +52,25 @@ public class Sandwich implements PriceCalc {
 
     @Override
     public String toString() {
+        String toppingsStr = "None";
+        if (toppings != null && !toppings.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (Toppings top : toppings) {
+                sb.append(top.toString()).append(", ");
+            }
+            toppingsStr = sb.substring(0, sb.length() - 2);
+        }
+        String chipsStr = (chips == null) ? "None" : String.format("$%.2f", chips.getPrice());
+        String drinksStr = (drinks == null) ? "None" : String.format("$%.2f", drinks.getPrices());
         return String.format(
                 "Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s | Total: $%.2f",
                 type,
                 size,
-                wantToa
+                wantToast ? "Toasted" : "Not Toasted",
+                toppingsStr,
+                chipsStr,
+                drinksStr
         );
     }
-
-
-
-
-    @Override
-    public void calculateTotalPrice() {
-        System.out.println(this.toString());
-
-    }
 }
-
-
-
-
 

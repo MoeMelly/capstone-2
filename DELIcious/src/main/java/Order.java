@@ -1,63 +1,65 @@
-import java.io.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order implements PriceCalc {
     private final String customerName;
     private final String orderId;
-    private final List<Sandwich> sandwiches;
-    List<Toppings> toppings;
+    private final List<Sandwich> sandwiches = new ArrayList<>();
+    private final List<Toppings> toppings = new ArrayList<>();
+    private final List<Drinks> drinks = new ArrayList<>();
+    private final List<Chips> chips = new ArrayList<>();
     private final LocalDateTime orderTime;
-    Chips chips;
-    Drinks drink;
     private double totalPrice;
 
-    public Order(String customerName, String orderId, List<Sandwich> sandwiches, LocalDateTime orderTime,Chips chips, Drinks drink, double totalPrice) {
+    public Order(String customerName, String orderId, List<Sandwich> sandwiches, List<Toppings> toppings,
+                 List<Drinks> drinks, List<Chips> chips, LocalDateTime orderTime, double totalPrice) {
         this.customerName = customerName;
         this.orderId = orderId;
-        this.sandwiches = new ArrayList<>(sandwiches != null ? sandwiches : List.of());
+        if (sandwiches != null) this.sandwiches.addAll(sandwiches);
+        if (toppings != null) this.toppings.addAll(toppings);
+        if (drinks != null) this.drinks.addAll(drinks);
+        if (chips != null) this.chips.addAll(chips);
         this.orderTime = orderTime;
-        this.chips = chips;
-        this.drink = drink;
         this.totalPrice = totalPrice;
     }
 
 
-    public String getCustomerName() {
-        return customerName;
-    }
+    public String getCustomerName() { return customerName; }
+    public String getOrderId() { return orderId; }
+    public List<Sandwich> getSandwiches() { return sandwiches; }
+    public List<Toppings> getToppings() { return toppings; }
+    public List<Drinks> getDrinks() { return drinks; }
+    public List<Chips> getChips() { return chips; }
+    public LocalDateTime getOrderTime() { return orderTime; }
+    public double getTotalPrice() { return totalPrice; }
 
-    public String getOrderId() {
-        return orderId;
-    }
-    public Chips getChips() {
-        return chips;
-    }
 
-    public Drinks getDrink() {
-        return drink;
-    }
-
-    public List<Sandwich> getSandwiches() {
-        return sandwiches;
-    }
-
-    public LocalDateTime getOrderTime() {
-        return orderTime;
-    }
-
-    public void addSandwich() {
-        if (sandwiches != null) {
-            sandwiches.add((Sandwich) sandwiches);
+    public void addSandwich(Sandwich sandwich) {
+        if (sandwich != null) {
+            sandwiches.add(sandwich);
             calculateTotalPrice();
         }
     }
 
-    public void removeSandwich(Sandwich r) {
-        if (r != null) {
-            sandwiches.remove(r);
+    public void addDrink(Drinks drink) {
+        if (drink != null) {
+            drinks.add(drink);
+            calculateTotalPrice();
+        }
+    }
+
+    public void addChips(Chips chip) {
+        if (chip != null) {
+            chips.add(chip);
+            calculateTotalPrice();
+        }
+    }
+
+
+    public void removeSandwich(Sandwich sandwich) {
+        if (sandwich != null) {
+            sandwiches.remove(sandwich);
             calculateTotalPrice();
         }
     }
@@ -66,13 +68,11 @@ public class Order implements PriceCalc {
     public void calculateTotalPrice() {
         totalPrice = 0.0;
         for (Sandwich s : sandwiches) {
-            double sandwichPrice = 0.0;
-            switch (s.getSize()) {
-                case SMALL -> sandwichPrice = 5.50;
-                case MEDIUM -> sandwichPrice = 7.00;
-                case LARGE -> sandwichPrice = 8.50;
-            }
-
+            double sandwichPrice = switch (s.getSize()) {
+                case SMALL -> 5.50;
+                case MEDIUM -> 7.00;
+                case LARGE -> 8.50;
+            };
 
             if (s.getDrinks() != null) {
                 sandwichPrice += s.getDrinks().getPrices();
@@ -83,57 +83,51 @@ public class Order implements PriceCalc {
             }
 
             if (s.getToppings() != null) {
-                for (Toppings toppings : s.getToppings()) {
-                    sandwichPrice += toppings.sizePrice(toppings.getSize());
+                for (Toppings topping : s.getToppings()) {
+                    sandwichPrice += topping.sizePrice(topping.getSize());
                 }
-
-
             }
+
             totalPrice += sandwichPrice;
         }
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
 
 
-        public void viewOrder(Sandwich sandwich) {
-            System.out.println("-----Order Summary-----");
-            System.out.println("Sandwich: " + sandwich.getType());
-
-            System.out.println("Toppings:");
-            for (Toppings topping : sandwich.getToppings()) {
-                System.out.println("--" + topping);
+        for (Drinks drink : drinks) {
+            totalPrice += drink.getPrices();
         }
-            if(chips != null) {
-                System.out.println("Chips: " + chips.getPrice());
-            }
-            if (drink !=null) {
-                System.out.println("Drink: " + drink.getPrices());
-            }
-            System.out.println("Total Price: $" + totalPrice);
 
+
+        for (Chips chip : chips) {
+            totalPrice += chip.getPrice();
+        }
     }
 
 
+    public void viewOrder() {
+        System.out.println("----- Order Summary -----");
+        System.out.println("Customer: " + customerName);
+        System.out.println("Order ID: " + orderId);
+        System.out.println("Order Time: " + orderTime);
 
+        System.out.println("\nSandwiches:");
+        for (Sandwich sandwich : sandwiches) {
+            System.out.println("- " + sandwich.getType() + " (" + sandwich.getSize() + ")");
+            System.out.println("  Toppings:");
+            for (Toppings topping : sandwich.getToppings()) {
+                System.out.println("    * " + topping);
+            }
+        }
+
+        System.out.println("\nDrinks:");
+        for (Drinks drink : drinks) {
+            System.out.println("- " + drink.getPrices());
+        }
+
+        System.out.println("\nChips:");
+        for (Chips chip : chips) {
+            System.out.println("- " + chip.getPrice());
+        }
+
+        System.out.printf("\nTotal Price: $%.2f%n", totalPrice);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
