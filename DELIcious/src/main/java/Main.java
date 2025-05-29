@@ -85,7 +85,7 @@ public class Main {
 
         List<Toppings> toppings = new ArrayList<>();
         boolean addToppings = true;
-        while (!addToppings) {
+        while (addToppings) {
             System.out.println("Enter Topping name (Type 'done to finish): ");
             String toppingName = scanner.nextLine();
             if (toppingName.equalsIgnoreCase("done"))
@@ -150,7 +150,8 @@ public class Main {
 
     public static Order sendToReceipt(Order currentOrder) {
         currentOrder.calculateTotalPrice();
-        FileIo.saveToReceipt(currentOrder);
+        for (Sandwich sandwich : currentOrder.getSandwiches())
+        FileIo.saveToReceipt(currentOrder, sandwich);
 
 
         return currentOrder;
