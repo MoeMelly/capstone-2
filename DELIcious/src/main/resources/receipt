@@ -166,4 +166,37 @@ Chips:
 Chips Size: LARGE | Price: $2.50
 
 Sauces:
-[RANCH]
+[RANCH]---------Recent Orders----------Timestamp: 2025-05-30 09:52:26
+Bread type: WHEAT
+Bread size: SMALL
+Toasted: Yes
+
+Toppings:
+-STEAK (SMALL) - $1.00
+-CHICKEN (LARGE) - $3.00
+-ROAST BEEF (MEDIUM) - $2.00
+
+Drink:
+Drink Size: SMALL | Price: $2.00
+
+Chips:
+Chips Size: MEDIUM | Price: $2.00
+
+Sauces:
+[BBQ, MAYO]---------Recent Orders----------Timestamp: 2025-05-30 13:11:19
+Bread type: WHITE
+Bread size: SMALL
+Toasted: Yes
+
+Toppings:
+-CHICKEN (SMALL) - $1.00
+-AMERICAN (SMALL) - $0.75
+
+Drink:
+Drink Size: SMALL | Price: $2.00
+
+Chips:
+Chips Size: MEDIUM | Price: $2.00
+
+Sauces:
+[BBQ, RANCH]

@@ -14,7 +14,7 @@ public class Main {
     public static String showHomeScreen() {
         boolean keepGoing = true;
         while (keepGoing) {
-            System.out.println("----HEY LOOK! ITS A SANDWICH SHOP WITH THE MOST MEDIOCRE SANDWICHES EVER :D----");
+            System.out.println("HEY LOOK! ITS A SANDWICH SHOP WITH THE MOST MEDIOCRE SANDWICHES EVER BY MELCHIOR KOMI AND MOHAMMED JAMI I THINK AKA GOD BLESS AFRICA! :D----");
             System.out.println("1.Begin Building Your Sandwich Now! ");
             System.out.println("0.Exit");
             String input = scanner.nextLine();
@@ -58,7 +58,7 @@ public class Main {
                     break;
                 case "4":
                     List<Sauces> sauces = addSauces();
-                    if (sauces != null && !sauces.isEmpty())
+                    if (sauces != null)
                         currentOrder.addSauces(sauces);
                     keepGoing = false;
                     break;

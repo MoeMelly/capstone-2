@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Toppings {
     private final String toppingType;
     private final String name;
     private final BreadSize size;
-    private Sauces sauces;
     private final double price;
 
     public Toppings(String toppingType, String name, BreadSize size, double price) {
@@ -55,75 +53,18 @@ public class Toppings {
 
     }
 
-    public static double extraCharge(List<String> extras, BreadSize size) {
-        double surCharge = 0.0;
-
-        for (String extra : extras) {
-            switch (extra.toLowerCase()) {
-                case "extra meat" -> surCharge += switch (size) {
-                    case SMALL -> 0.75;
-                    case MEDIUM -> 1.00;
-                    case LARGE -> 1.50;
-
-                };
-
-                case "extra cheese" -> {
-                    surCharge += switch (size) {
-                        case SMALL -> 0.30;
-                        case MEDIUM -> 0.60;
-                        case LARGE -> 0.90;
-                    };
-                }
-                default -> throw new IllegalArgumentException("Invalid extra: " + extra);
-            }
-        }
-        return surCharge;
-    }
-
-    public static Toppings filterToppings(String name, BreadSize size) {
-        if (name == null || name.trim().isEmpty())
+    public static Toppings filterToppings(String toppingName, BreadSize size) {
+        if (toppingName == null || toppingName.trim().isEmpty())
             return null;
         return getToppings().stream()
-                .filter(t -> t.getName().equalsIgnoreCase(name.trim()) && t.getSize() == size)
+                .filter(t -> t.getName().equalsIgnoreCase(toppingName.trim()) && t.getSize() == size)
                 .findFirst()
                 .orElse(null);
-    }
-
-    public static void printToppingsByCategory(List<Toppings> toppings) {
-        String meat = toppings.stream()
-                .filter(toppings1 -> "MEAT".equalsIgnoreCase(toppings1.getType()))
-                .map(Toppings::toString)
-                .collect(Collectors.joining());
-
-
-        String cheese = toppings.stream()
-                .filter(toppings1 -> "CHEESE".equalsIgnoreCase(toppings1.getType()))
-                .map(Toppings::toString)
-                .collect(Collectors.joining());
-
-
-        String regularToppings = toppings.stream()
-                .filter(toppings1 -> "REGULAR TOPPINGS".equalsIgnoreCase(toppings1.getType()))
-                .map(Toppings::toString).collect(Collectors.joining());
-
-
-        System.out.println("MEAT TOPPINGS:\n" + meat);
-        System.out.println("CHEESE:\n" + cheese);
-        System.out.println("REGULAR TOPPINGS:\n" + regularToppings);
-
-
-    }
-    public Sauces getSauces() {
-        return sauces;
     }
 
 
     public BreadSize getSize() {
         return size;
-    }
-
-    public String getType() {
-        return toppingType;
     }
 
     public String getName() {
