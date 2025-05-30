@@ -24,13 +24,6 @@ public class Toppings {
         String[] regulars = {"LETTUCE", "PEPPERS", "ONIONS", "TOMATOES", "JALAPENOS", "CUCUMBERS", "PICKLES", "GUACAMOLE", "MUSHROOMS"};
         String[] sauces = {"BBQ","RANCH","KETCHUP","THOUSAND_ISLANDS","MAYO","MUSTARD"};
 
-
-
-
-
-
-
-
         for (BreadSize size : BreadSize.values()) {
             for (String meat : meats) {
                 toppings.add(new Toppings("MEAT", meat, size, 1.00));

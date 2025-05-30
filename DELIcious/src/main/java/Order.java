@@ -134,11 +134,8 @@ public class Order implements PriceCalc {
             if (sandwich.getChips() != null)
                 System.out.println("Chips: " + sandwich.getChips());
 
-            if (sandwich.getSauces() != null && !sandwich.getSauces().isEmpty()) {
-                System.out.println(" Sauces: " +
-                        sandwich.getSauces().stream()
-                                .map(s -> s.name().toLowerCase())
-                                .collect(Collectors.joining(",")));
+            if (sandwich.getSauces().isEmpty()) {
+                System.out.println("Sauces: " + sandwich.getSauces());
 
             }
         }
