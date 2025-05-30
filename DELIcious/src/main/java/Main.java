@@ -65,6 +65,7 @@ public class Main {
                 case "5":
                     sendToReceipt(currentOrder);
                     currentOrder.viewOrder();
+                    break;
                 case "0":
                     keepGoing = false;
                     break;
@@ -114,14 +115,13 @@ public class Main {
                 System.out.println("Invalid size. Please try again.");
 
 
-                Drinks drinks = addDrinks();
-                Chips chips = addChips();
-                List<Sauces> sauces = addSauces();
-                return new Sandwich(type, size, toast, drinks, chips, toppings, sauces);
             }
         }
+        Drinks drinks = addDrinks();
+        Chips chips = addChips();
+        List<Sauces> sauces = addSauces();
+        return new Sandwich(type, size, toast, drinks, chips, toppings, sauces);
 
-        return null;
     }
 
     private static List<Sauces> addSauces() {

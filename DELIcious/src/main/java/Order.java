@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Order implements PriceCalc {
     private final String customerName;
@@ -25,17 +26,42 @@ public class Order implements PriceCalc {
         this.orderTime = orderTime;
         this.totalPrice = totalPrice;
     }
+
     public List<List<Sauces>> getSauces() {
         return sauces;
     }
-    public String getCustomerName() { return customerName; }
-    public String getOrderId() { return orderId; }
-    public List<Sandwich> getSandwiches() { return sandwiches; }
-    public List<Toppings> getToppings() { return toppings; }
-    public List<Drinks> getDrinks() { return drinks; }
-    public List<Chips> getChips() { return chips; }
-    public LocalDateTime getOrderTime() { return orderTime; }
-    public double getTotalPrice() { return totalPrice; }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public List<Sandwich> getSandwiches() {
+        return sandwiches;
+    }
+
+    public List<Toppings> getToppings() {
+        return toppings;
+    }
+
+    public List<Drinks> getDrinks() {
+        return drinks;
+    }
+
+    public List<Chips> getChips() {
+        return chips;
+    }
+
+    public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
 
     public void addSandwich(Sandwich sandwich) {
         if (sandwich != null) {
@@ -57,7 +83,8 @@ public class Order implements PriceCalc {
             calculateTotalPrice();
         }
     }
-        public void addSauces(List<Sauces> sauce) {
+
+    public void addSauces(List<Sauces> sauce) {
         if (sauces != null) {
             this.sauces.add(sauce);
 
@@ -119,25 +146,26 @@ public class Order implements PriceCalc {
         for (Sandwich sandwich : sandwiches) {
             System.out.println("- " + sandwich.getSauces() + sandwich.getType() + " (" + sandwich.getSize() + ")");
             System.out.println("  Toppings");
-            for (Toppings topping : sandwich.getToppings()) {
-                System.out.println("    * " + topping);
+
+            if (sandwich.getToppings() != null && !sandwich.getToppings().isEmpty()) {
+                for (Toppings topping : sandwich.getToppings()) {
+                    System.out.println("    * " + topping);
+                }
+            }
+
+
+            if (sandwich.getDrinks() != null)
+                System.out.println("Drink: " + sandwich.getDrinks());
+
+            if (sandwich.getChips() != null)
+                System.out.println("Chips: " + sandwich.getChips());
+
+            if (sandwich.getSauces() != null && !sandwich.getSauces().isEmpty()) {
+                System.out.println(" Sauces: " +
+                        sandwich.getSauces().stream()
+                                .map(s -> s.name().toLowerCase())
+                                .collect(Collectors.joining(",")));
             }
         }
-
-        System.out.println("\nDrinks:");
-        for (Drinks drink : drinks) {
-            System.out.println("- " + drink + " - $" + String.format("%.2f", drink.getPrice()));
-        }
-
-        System.out.println("\nChips:");
-        for (Chips chip : chips) {
-            System.out.println("- " + chip + " - $" + String.format("%.2f", chip.getPrice()));
-        }
-        System.out.println("\nSauces:");
-        for (List<Sauces> sauces1 : sauces) {
-            System.out.println("-" + sauces1);
-        }
-
-        System.out.printf("\nTotal Price: $%.2f%n", totalPrice);
     }
 }
