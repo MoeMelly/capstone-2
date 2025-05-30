@@ -144,7 +144,7 @@ public class Order implements PriceCalc {
 
         System.out.println("\nSandwiches:");
         for (Sandwich sandwich : sandwiches) {
-            System.out.println("- " + sandwich.getSauces() + sandwich.getType() + " (" + sandwich.getSize() + ")");
+            System.out.println("- " + sandwich.getType() + " (" + sandwich.getSize() + ")");
             System.out.println("  Toppings");
 
             if (sandwich.getToppings() != null && !sandwich.getToppings().isEmpty()) {
