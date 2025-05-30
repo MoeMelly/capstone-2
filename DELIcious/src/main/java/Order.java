@@ -119,7 +119,7 @@ public class Order implements PriceCalc {
         System.out.println("\nSandwiches:");
         for (Sandwich sandwich : sandwiches) {
             System.out.println("- " + sandwich.getType() + " (" + sandwich.getSize() + ")");
-            System.out.println("  Toppings");
+            System.out.println(" --Toppings--");
 
             if (sandwich.getToppings() != null && !sandwich.getToppings().isEmpty()) {
                 for (Toppings topping : sandwich.getToppings()) {
@@ -139,6 +139,7 @@ public class Order implements PriceCalc {
                         sandwich.getSauces().stream()
                                 .map(s -> s.name().toLowerCase())
                                 .collect(Collectors.joining(",")));
+
             }
         }
     }

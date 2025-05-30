@@ -14,7 +14,7 @@ public class Main {
     public static String showHomeScreen() {
         boolean keepGoing = true;
         while (keepGoing) {
-            System.out.println("----BEER BELLY SANDWICHES----");
+            System.out.println("----HEY LOOK! ITS A SANDWICH SHOP WITH THE MOST MEDIOCRE SANDWICHES EVER :D----");
             System.out.println("1.Begin Building Your Sandwich Now! ");
             System.out.println("0.Exit");
             String input = scanner.nextLine();
@@ -127,7 +127,7 @@ public class Main {
     private static List<Sauces> addSauces() {
         System.out.println("Available Sauces: " + Arrays.toString(Sauces.values()));
 
-        System.out.println("Enter sauces(comma-separated): ");
+        System.out.println("Enter sauces: ");
             String input = scanner.nextLine();
             List<Sauces> list = new ArrayList<>();
 
