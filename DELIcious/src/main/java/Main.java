@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,13 +14,13 @@ public class Main {
     public static String showHomeScreen() {
         boolean keepGoing = true;
         while (keepGoing) {
-            System.out.println("----MEllYs SANDWICH SHOP----");
+            System.out.println("----BIG BACKS----");
             System.out.println("1.Begin Building Your Sandwich Now! ");
             System.out.println("0.Exit");
             String input = scanner.nextLine();
             switch (input) {
                 case "1" -> {
-                    Order currentOrder = new Order("LIL Melly", "PO90K", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), LocalDateTime.now(), 0.0);
+                    Order currentOrder = new Order("LIL Melly", "PO90K", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), LocalDateTime.now(), new ArrayList<>(), 0.0);
                     orderScreen(currentOrder);
                 }
                 case "0" -> keepGoing = false;
@@ -37,7 +38,8 @@ public class Main {
             System.out.println("1.Add Sandwich");
             System.out.println("2.Add Drink");
             System.out.println("3.Add Chips");
-            System.out.println("4.Checkout");
+            System.out.println("4.Add Sauces");
+            System.out.println("5.Checkout");
             System.out.println("0.Cancel Order");
             String input = scanner.nextLine();
 
@@ -55,10 +57,14 @@ public class Main {
                     if (chips != null) currentOrder.addChips(chips);
                     break;
                 case "4":
-                    sendToReceipt(currentOrder);
-                    currentOrder.viewOrder();
+                    List<Sauces> sauces = addSauces();
+                    if (sauces != null && !sauces.isEmpty())
+                        currentOrder.addSauces(sauces);
                     keepGoing = false;
                     break;
+                case "5":
+                    sendToReceipt(currentOrder);
+                    currentOrder.viewOrder();
                 case "0":
                     keepGoing = false;
                     break;
@@ -75,45 +81,69 @@ public class Main {
     }
 
     public static Sandwich addSandwich() {
-        System.out.println("Choose Bread Size: (SMALL,MEDIUM,LARGE):");
+        System.out.println("Choose Bread Size: (SMALL, MEDIUM,LARGE):");
         BreadSize size = BreadSize.valueOf(scanner.nextLine().trim().toUpperCase());
-        System.out.println("Choose Bread Type (WHITE,WHEAT,RYE,WRAP): ");
+        System.out.println("Choose Bread Type (WHITE,WHEAT,RYE,WRAP):");
         BreadType type = BreadType.valueOf(scanner.nextLine().trim().toUpperCase());
         System.out.println("Do you want it toasted? (yes/no): ");
         boolean toast = scanner.nextLine().trim().equalsIgnoreCase("yes");
 
-
         List<Toppings> toppings = new ArrayList<>();
         boolean addToppings = true;
         while (addToppings) {
-            System.out.println("Enter Topping name (Type 'done to finish): ");
+            System.out.println("Enter Topping name (Type 'done' to finish):");
             String toppingName = scanner.nextLine();
+
             if (toppingName.equalsIgnoreCase("done"))
                 break;
 
-            System.out.println("Enter topping size (SMALL, MEDIUM, LARGE):");
-            String sizeInput = scanner.nextLine().trim().toUpperCase();
+            System.out.println("Enter Topping size (SMALL, MEDIUM, LARGE):");
+            String sizeInput = scanner.nextLine();
 
             try {
                 BreadSize toppingSize = BreadSize.valueOf(sizeInput);
-                Toppings select = Toppings.filterToppings(toppingName, toppingSize);
-                if (select != null) {
-                    toppings.add(select);
-                    System.out.println("Added: " + select);
+                Toppings selected = Toppings.filterToppings(toppingName, toppingSize);
+
+                if (selected != null) {
+                    toppings.add(selected);
+                    System.out.println("The Following toppings have been added: " + selected);
                 } else {
-                    System.out.println("Topping not found.");
+                    System.out.println("Topping does not exist.");
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("Invalid size. try again please.");
+                System.out.println("Invalid size. Please try again.");
 
+
+                Drinks drinks = addDrinks();
+                Chips chips = addChips();
+                List<Sauces> sauces = addSauces();
+                return new Sandwich(type, size, toast, drinks, chips, toppings, sauces);
             }
-
         }
-        Drinks drinks = addDrinks();
-        Chips chips = addChips();
-        return new Sandwich(type, size, toast, drinks, chips, toppings);
+
+        return null;
     }
 
+    private static List<Sauces> addSauces() {
+        System.out.println("Available Sauces: " + Arrays.toString(Sauces.values()));
+
+
+
+
+            System.out.println("Enter sauces(comma-seperated): ");
+            String input = scanner.nextLine();
+            List<Sauces> list = new ArrayList<>();
+
+            for (String name : input.split(",")) {
+                try {
+                    list.add(Sauces.valueOf(name.trim().toUpperCase()));
+
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid sauce: " + name.trim());
+                }
+            }
+        return list;
+    }
 
     public static Drinks addDrinks() {
         System.out.println("Our Flavor Machine is down. Only water.");
@@ -126,7 +156,7 @@ public class Main {
                 case MEDIUM -> 1.50;
                 case LARGE -> 2.00;
             };
-            return new Drinks("Water",size,price) ;
+            return new Drinks("Water", size, price);
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid size. no drink added");
             return null;
@@ -151,13 +181,19 @@ public class Main {
     public static Order sendToReceipt(Order currentOrder) {
         currentOrder.calculateTotalPrice();
         for (Sandwich sandwich : currentOrder.getSandwiches())
-        FileIo.saveToReceipt(currentOrder, sandwich);
+            FileIo.saveToReceipt(currentOrder, sandwich);
 
 
         return currentOrder;
     }
-
 }
+
+
+
+
+
+
+
 
 
 

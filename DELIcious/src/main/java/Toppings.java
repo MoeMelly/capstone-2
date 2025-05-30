@@ -7,12 +7,14 @@ public class Toppings {
     private final String toppingType;
     private final String name;
     private final BreadSize size;
+    private Sauces sauces;
     private final double price;
 
     public Toppings(String toppingType, String name, BreadSize size, double price) {
         this.toppingType = toppingType;
         this.name = name;
         this.size = size;
+        this.sauces = sauces;
         this.price = price;
 
     }
@@ -27,6 +29,8 @@ public class Toppings {
         String[] meats = {"STEAK", "HAM", "SALAMI", "ROAST BEEF", "CHICKEN", "BACON"};
         String[] cheeses = {"AMERICAN", "PROVOLONE", "CHEDDAR", "SWISS"};
         String[] regulars = {"LETTUCE", "PEPPERS", "ONIONS", "TOMATOES", "JALAPENOS", "CUCUMBERS", "PICKLES", "GUACAMOLE", "MUSHROOMS"};
+        String[] sauces = {"BBQ","RANCH","KETCHUP","THOUSAND_ISLANDS","MAYO","MUSTARD"};
+
 
         for (BreadSize size : BreadSize.values()) {
             double multiplier = switch (size) {
@@ -49,6 +53,9 @@ public class Toppings {
             }
             for (String regularTop : regulars) {
                 toppings.add(new Toppings("REGULAR TOPPINGS",regularTop,size,0.20));
+            }
+            for (String sauces1 : sauces) {
+                toppings.add(new Toppings("SAUCES",sauces1,size,0.0));
             }
         }
 
@@ -115,6 +122,9 @@ public class Toppings {
         System.out.println("REGULAR TOPPINGS:\n" + regularToppings);
 
 
+    }
+    public Sauces getSauces() {
+        return sauces;
     }
 
 

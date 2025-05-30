@@ -15,3 +15,34 @@ Drink Size: SMALL | Price: $2.00
 
 Chips:
 Chips Size: MEDIUM | Price: $2.00
+---------Past Order----------Timestamp: 2025-05-29 19:03:02
+Bread type: WHITE
+Bread size: SMALL
+Toasted: No
+
+Toppings:
+-STEAK (SMALL) - $1.00
+-CHICKEN (MEDIUM) - $2.00
+-ROAST BEEF (LARGE) - $3.00
+-AMERICAN (SMALL) - $0.75
+
+Drink:
+Drink Size: SMALL | Price: $2.00
+
+Chips:
+Chips Size: LARGE | Price: $2.50
+---------Past Order----------Timestamp: 2025-05-29 21:06:50
+Bread type: WHITE
+Bread size: SMALL
+Toasted: Yes
+
+Toppings:
+
+Drink:
+Drink Size: SMALL | Price: $2.00
+
+Chips:
+Chips Size: SMALL | Price: $1.50
+
+Sauces:
+[RANCH]
