@@ -51,28 +51,7 @@ public class Sandwich {
 
     @Override
     public String toString() {
-        String toppingsStr = "None";
-        if (!toppings.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (Toppings top : toppings) {
-                sb.append(top).append(",");
-            }
-            toppingsStr = sb.substring(0, sb.length() - 1);
-        }
-
-        String chipsStr = (chips == null) ? "None" : String.format("$%.2f", chips.getPrice());
-        String drinksStr = (drinks == null) ? "None" : String.format("$%.2f", drinks.getPrice());
-
-
-
-        return String.format(
-                "Sandwich: %s (%s, %s) | Toppings: %s | Chips: %s | Drinks: %s",
-                type,
-                size,
-                wantToast ? "Toasted" : "Not Toasted",
-                toppingsStr,
-                chipsStr,
-                drinksStr
+        return type + "(" + size + "," + (wantToast ? "Toasted" : "Not Toasted") + ") | Toppings: " + (toppings.isEmpty() ? "None" : toppings.toString().replaceAll("[\\[\\]]", "")) + "| Chips: " + (chips == null ? "None" : "$" + String.format("%.2f", chips.getPrice()) + " | Drinks: " + (drinks == null ? "None" : "$" + String.format("%.2f",drinks.getPrice()))
 
         );
     }
