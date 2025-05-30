@@ -13,15 +13,11 @@ public class Toppings {
         this.toppingType = toppingType;
         this.name = name;
         this.size = size;
-        this.sauces = sauces;
         this.price = price;
 
     }
 
     public static List<Toppings> getToppings() {
-        double smallMeatPrice = 1.00;
-        double smallCheese = 0.75;
-        double regular = 0.20;
 
 
         List<Toppings> toppings = new ArrayList<>();
@@ -31,13 +27,8 @@ public class Toppings {
         String[] sauces = {"BBQ","RANCH","KETCHUP","THOUSAND_ISLANDS","MAYO","MUSTARD"};
 
 
-        for (BreadSize size : BreadSize.values()) {
-            double multiplier = switch (size) {
-                case SMALL -> 1;
-                case MEDIUM -> 2;
-                case LARGE -> 3;
-            };
-        }
+
+
 
 
 

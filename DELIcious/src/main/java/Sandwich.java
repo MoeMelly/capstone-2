@@ -57,7 +57,7 @@ public class Sandwich {
             for (Toppings top : toppings) {
                 sb.append(top).append(",");
             }
-            toppingsStr = sb.substring(0, sb.length() - 2);
+            toppingsStr = sb.substring(0, sb.length() - 1);
         }
 
         String chipsStr = (chips == null) ? "None" : String.format("$%.2f", chips.getPrice());
