@@ -10,7 +10,7 @@ public class Order implements PriceCalc {
     private final List<Toppings> toppings = new ArrayList<>();
     private final List<Drinks> drinks = new ArrayList<>();
     private final List<Chips> chips = new ArrayList<>();
-    private final List<List<Sauces>> sauces = new ArrayList<List<Sauces>>();
+    private final List<List<Sauces>> sauces = new ArrayList<>();
     private final LocalDateTime orderTime;
     private double totalPrice;
 
@@ -27,41 +27,20 @@ public class Order implements PriceCalc {
         this.totalPrice = totalPrice;
     }
 
-    public List<List<Sauces>> getSauces() {
-        return sauces;
-    }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
 
     public List<Sandwich> getSandwiches() {
         return sandwiches;
     }
 
-    public List<Toppings> getToppings() {
-        return toppings;
-    }
+
 
     public List<Drinks> getDrinks() {
         return drinks;
     }
 
-    public List<Chips> getChips() {
-        return chips;
-    }
 
-    public LocalDateTime getOrderTime() {
-        return orderTime;
-    }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
 
     public void addSandwich(Sandwich sandwich) {
         if (sandwich != null) {
@@ -92,12 +71,7 @@ public class Order implements PriceCalc {
         }
     }
 
-    public void removeSandwich(Sandwich sandwich) {
-        if (sandwich != null) {
-            sandwiches.remove(sandwich);
-            calculateTotalPrice();
-        }
-    }
+
 
     @Override
     public void calculateTotalPrice() {

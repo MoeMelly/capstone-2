@@ -1,6 +1,6 @@
 public class Chips {
-    private double price;
-    private ChipsSize size;
+    private final double price;
+    private final ChipsSize size;
 
     public Chips(ChipsSize size) {
         this.size = size;
@@ -13,13 +13,9 @@ public class Chips {
             case SMALL -> 1.50;
             case MEDIUM -> 2.0;
             case LARGE -> 2.50;
-            default -> throw new IllegalArgumentException("Unexpected chip size: " + size);
         };
     }
 
-    public ChipsSize getSize() {
-        return size;
-    }
 
     public double getPrice() {
         return price;

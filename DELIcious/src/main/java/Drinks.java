@@ -1,7 +1,7 @@
 public class Drinks {
     String water;
-    private DrinksSize size;
-    private double price;
+    private final DrinksSize size;
+    private final double price;
 
     public Drinks(String water, DrinksSize size, double price) {
         this.water = water;
@@ -17,9 +17,6 @@ public class Drinks {
         };
     }
 
-    public DrinksSize getSize() {
-        return size;
-    }
 
     public double getPrice() {
         return price;

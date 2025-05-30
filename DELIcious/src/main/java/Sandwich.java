@@ -62,7 +62,7 @@ public class Sandwich {
 
         String chipsStr = (chips == null) ? "None" : String.format("$%.2f", chips.getPrice());
         String drinksStr = (drinks == null) ? "None" : String.format("$%.2f", drinks.getPrice());
-        String saucesStr = (sauces == null) ? "None" : String.format("%s", sauces);
+
 
 
         return String.format(
@@ -72,8 +72,8 @@ public class Sandwich {
                 wantToast ? "Toasted" : "Not Toasted",
                 toppingsStr,
                 chipsStr,
-                drinksStr,
-                sauces
+                drinksStr
+
         );
     }
 }
